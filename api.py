@@ -6,7 +6,7 @@ import json
 
 time.sleep(5)
 
-dbConnection = sqlite.connect('config.db')
+dbConnection = sqlite.connect('../config.db')
 db = dbConnection.cursor()
 
 GPIO.setmode(GPIO.BOARD)
@@ -51,6 +51,10 @@ def updateValve(valve, valvePin, valveDrink, valveType):
         db.execute("UPDATE valves SET valve_type = " + valveType + " WHERE valve_number = " + str(valve))
     dbConnection.commit()
 
+def updateTimings(shots, type, time):
+    db.execute("UPDATE timings SET " + type + " = " + str(time) + " WHERE shot_number = " + str(shots))
+    dbConnection.commit()
+
 def flushValve(valve):
     flushPin = getPinFromValve(valve)
     GPIO.output(flushPin, GPIO.LOW)
@@ -62,6 +66,11 @@ def pour(shots):
     pourDrink(request.args.get('alcohol'), request.args.get('mixer'), shots)
     return "Your "+shots+" "+request.args.get("alcohol")+" and "+request.args.get("mixer")+" is ready"
 
+@app.route("/pour/<shots>", methods=["PATCH"])
+def updateTime(shots):
+    updateTimings(shots, request.args.get('drinkType'), request.args.get('time'))
+    return "The update has been made"
+
 @app.route("/drinks", methods=["GET"])
 def getDrinks():
     drinksList = []
@@ -70,7 +79,7 @@ def getDrinks():
     return json.dumps(drinksList)
 
 @app.route("/<valve>", methods=["PATCH"])
-def update(valve):
+def updateValve(valve):
     updateValve(valve, request.args.get('valvePin'), request.args.get('valveDrink'), request.args.get('valveType'))
     return "The update has been made"
 
