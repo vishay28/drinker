@@ -51,9 +51,12 @@ def updateValveData(valve, valvePin, valveDrink, valveType):
         db.execute("UPDATE valves SET valve_type = " + valveType + " WHERE valve_number = " + str(valve))
     dbConnection.commit()
 
-def updateTimings(shots, type, time):
-    if (time):
-        db.execute("UPDATE timings SET " + type + " = " + str(time) + " WHERE shot_number = " + str(shots))
+def updateTimings(shots, alcoholTime, mixerTime):
+    if (alcoholTime):
+        db.execute("UPDATE timings SET alcohol_time="+ str(alcoholTime) + " WHERE shot_number = " + str(shots))
+        dbConnection.commit()
+    if (mixerTime):    
+        db.execute("UPDATE timings SET mixer_time="+ str(mixerTime) + " WHERE shot_number = " + str(shots))
         dbConnection.commit()
 
 def flushValve(valve):
@@ -69,7 +72,7 @@ def pour(shots):
 
 @app.route("/pour/<shots>", methods=["PATCH"])
 def updateTime(shots):
-    updateTimings(shots, request.args.get('drinkType'), request.args.get('time'))
+    updateTimings(shots, request.args.get('alcoholTime'), request.args.get('mixerTime'))
     return "The update has been made"
 
 @app.route("/drinks", methods=["GET"])
