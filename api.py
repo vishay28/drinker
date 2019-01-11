@@ -42,7 +42,7 @@ def pourDrink(alcohol, mixer, shots):
     time.sleep(mixerTime)
     GPIO.output(mixerPin, GPIO.HIGH)
 
-def updateValve(valve, valvePin, valveDrink, valveType):
+def updateValveData(valve, valvePin, valveDrink, valveType):
     if (valvePin):
         db.execute("UPDATE valves SET valve_pin = " + valvePin + " WHERE valve_number = " + str(valve))
     if (valveDrink):
@@ -80,7 +80,7 @@ def getDrinks():
 
 @app.route("/<valve>", methods=["PATCH"])
 def updateValve(valve):
-    updateValve(valve, request.args.get('valvePin'), request.args.get('valveDrink'), request.args.get('valveType'))
+    updateValveData(valve, request.args.get('valvePin'), request.args.get('valveDrink'), request.args.get('valveType'))
     return "The update has been made"
 
 @app.route("/<valve>", methods=["POST"])
