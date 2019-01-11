@@ -52,8 +52,9 @@ def updateValveData(valve, valvePin, valveDrink, valveType):
     dbConnection.commit()
 
 def updateTimings(shots, type, time):
-    db.execute("UPDATE timings SET " + type + " = " + str(time) + " WHERE shot_number = " + str(shots))
-    dbConnection.commit()
+    if (time):
+        db.execute("UPDATE timings SET " + type + " = " + str(time) + " WHERE shot_number = " + str(shots))
+        dbConnection.commit()
 
 def flushValve(valve):
     flushPin = getPinFromValve(valve)
