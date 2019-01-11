@@ -43,13 +43,15 @@ def pourDrink(alcohol, mixer, shots):
     GPIO.output(mixerPin, GPIO.HIGH)
 
 def updateValveData(valve, valvePin, valveDrink, valveType):
-    if (valvePin):
+    if (valvePin !== ''):
         db.execute("UPDATE valves SET valve_pin = " + valvePin + " WHERE valve_number = " + str(valve))
-    if (valveDrink):
+        dbConnection.commit()
+    if (valveDrink !== ''):
         db.execute("UPDATE valves SET valve_drink = " + valveDrink + " WHERE valve_number = " + str(valve))
-    if (valveType):
+        dbConnection.commit()
+    if (valveType !== ''):
         db.execute("UPDATE valves SET valve_type = " + valveType + " WHERE valve_number = " + str(valve))
-    dbConnection.commit()
+        dbConnection.commit()
 
 def updateTimings(shots, alcoholTime, mixerTime):
     if (alcoholTime):
