@@ -1,0 +1,2 @@
+# Readme
+This project is a personal project to create an electronic drinks dispenser. There are two aspects to it, the hardware and the software. For the hardware there is the actual dispensing machine and the software is an API written in Python along with an Android App. The idea of it is to use an app to pour a drink. Currently it is set up to have two drinks attached to it which can be poured however it can be expanded to more by adding more pipes. Have a look in the Wiki on the full instructions on how to build the project and how to set up all the software.
