@@ -95,4 +95,4 @@ def flush(valve):
     return "Flushed "+valve
 
 if __name__ == "__main__":
-    app.run(host='192.168.1.98')
+    app.run(host='192.168.1.77')
