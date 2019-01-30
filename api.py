@@ -5,6 +5,7 @@ import sqlite3 as sqlite
 import json
 
 time.sleep(5)
+ip = "192.168.1.521"
 
 dbConnection = sqlite.connect('../config.db')
 db = dbConnection.cursor()
@@ -95,4 +96,4 @@ def flush(valve):
     return "Flushed "+valve
 
 if __name__ == "__main__":
-    app.run(host='192.168.1.77')
+    app.run(host=ip)
