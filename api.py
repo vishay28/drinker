@@ -7,7 +7,7 @@ import json
 time.sleep(5)
 ip = "192.168.1.251"
 
-dbConnection = sqlite.connect('../config.db')
+dbConnection = sqlite.connect('./config.db')
 db = dbConnection.cursor()
 
 GPIO.setmode(GPIO.BOARD)
