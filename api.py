@@ -57,7 +57,7 @@ def updateTimings(shots, alcoholTime, mixerTime):
     if (alcoholTime):
         db.execute("UPDATE timings SET alcohol_time="+ str(alcoholTime) + " WHERE shot_number = " + str(shots))
         dbConnection.commit()
-    if (mixerTime):    
+    if (mixerTime):
         db.execute("UPDATE timings SET mixer_time="+ str(mixerTime) + " WHERE shot_number = " + str(shots))
         dbConnection.commit()
 
@@ -79,10 +79,14 @@ def updateTime(shots):
 
 @app.route("/drinks", methods=["GET"])
 def getDrinks():
-    drinksList = []
-    for drink in db.execute("SELECT valve_drink FROM valves"):
-        drinksList.append(drink[0])
-    return json.dumps(drinksList)
+    alcoholArr = []
+    mixerArr = []
+    for drink in db.execute("SELECT valve_drink FROM valves WHERE valve_type = 'alcohol'"):
+        alcoholArr.append(drink[0])
+    for drink in db.execute("SELECT valve_drink FROM valves WHERE valve_type = 'mixer'"):
+        mixerArr.append(drink[0])
+    drinksDict = {'alcohol':alcoholArr,'mixer':mixerArr}
+    return json.dumps(drinksDict)
 
 @app.route("/<valve>", methods=["PATCH"])
 def updateValve(valve):
