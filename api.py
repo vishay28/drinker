@@ -70,7 +70,7 @@ def flushValve(valve):
 @app.route("/pour/<shots>", methods=["POST"])
 def pour(shots):
     pourDrink(request.args.get('alcohol'), request.args.get('mixer'), shots)
-    if ((shots != 0) || (request.args.get('alcohol') != "'None'")):
+    if ((shots != 0) or (request.args.get('alcohol') != "'None'")):
         return "Your "+shots+" "+request.args.get("alcohol")+" and "+request.args.get("mixer")+" is ready"
     else:
         return "Your "+request.args.get("mixer")+" is ready"
