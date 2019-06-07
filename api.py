@@ -35,10 +35,12 @@ def pourDrink(alcohol, mixer, shots):
     alcoholPin = getPinFromDrink(alcohol)
     mixerPin = getPinFromDrink(mixer)
 
-    GPIO.output(alcoholPin, GPIO.LOW)
+    if (alcoholPin != None):
+        GPIO.output(alcoholPin, GPIO.LOW)
     GPIO.output(mixerPin, GPIO.LOW)
     time.sleep(alcoholTime)
-    GPIO.output(alcoholPin, GPIO.HIGH)
+    if (alcoholPin != None):
+        GPIO.output(alcoholPin, GPIO.HIGH)
     time.sleep(mixerTime)
     GPIO.output(mixerPin, GPIO.HIGH)
 
