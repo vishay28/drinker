@@ -35,10 +35,12 @@ def pourDrink(alcohol, mixer, shots):
     alcoholPin = getPinFromDrink(alcohol)
     mixerPin = getPinFromDrink(mixer)
 
-    GPIO.output(alcoholPin, GPIO.LOW)
+    if (alcoholPin != None):
+        GPIO.output(alcoholPin, GPIO.LOW)
     GPIO.output(mixerPin, GPIO.LOW)
     time.sleep(alcoholTime)
-    GPIO.output(alcoholPin, GPIO.HIGH)
+    if (alcoholPin != None):
+        GPIO.output(alcoholPin, GPIO.HIGH)
     time.sleep(mixerTime)
     GPIO.output(mixerPin, GPIO.HIGH)
 
@@ -70,7 +72,11 @@ def flushValve(valve):
 @app.route("/pour/<shots>", methods=["POST"])
 def pour(shots):
     pourDrink(request.args.get('alcohol'), request.args.get('mixer'), shots)
-    return "Your "+shots+" "+request.args.get("alcohol")+" and "+request.args.get("mixer")+" is ready"
+    if ((shots != '0') or (request.args.get('alcohol') != "'None'")):
+        return "Your "+shots+" "+request.args.get("alcohol")+" and "+request.args.get("mixer")+" is ready"
+    else:
+        return "Your "+request.args.get("mixer")+" is ready"
+
 
 @app.route("/pour/<shots>", methods=["PATCH"])
 def updateTime(shots):
